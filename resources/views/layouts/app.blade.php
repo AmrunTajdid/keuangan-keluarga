@@ -141,17 +141,26 @@
             </nav>
         </div>
 
-        <!-- Family Footer Status -->
-        <div class="p-4 m-3 bg-slate-50 rounded-2xl border border-slate-200/80">
-            <div class="flex items-center space-x-3">
+        <!-- Family Footer Status & Lock Button -->
+        <div class="p-3 m-3 space-y-2">
+            <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200/80 flex items-center space-x-2.5">
                 <div class="w-8 h-8 rounded-full bg-emerald-500/10 text-emerald-600 flex items-center justify-center font-bold text-sm">
                     🏡
                 </div>
                 <div class="text-xs">
                     <p class="font-bold text-slate-800">Keluarga Bahagia</p>
-                    <p class="text-slate-500">  </p>
+                    <p class="text-[10px] text-emerald-600 font-semibold">● Brankas Terbuka</p>
                 </div>
             </div>
+
+            <!-- Lock / Logout Form -->
+            <form method="POST" action="{{ route('pin.logout') }}">
+                @csrf
+                <button type="submit" class="w-full flex items-center justify-center space-x-2 py-2 px-3 text-xs font-bold text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-colors border border-slate-200/60">
+                    <span>🔒</span>
+                    <span>Kunci Brankas</span>
+                </button>
+            </form>
         </div>
     </aside>
 
@@ -168,12 +177,21 @@
                 <p class="text-xs text-slate-500 mt-0.5">@yield('page_subtitle', 'Pantau arus kas, alokasi anggaran, dan target impian keluarga Anda')</p>
             </div>
 
-            <div class="flex items-center space-x-3 w-full sm:w-auto justify-end">
+            <div class="flex items-center space-x-2 sm:space-x-3 w-full sm:w-auto justify-end">
                 <!-- Date Indicator -->
                 <div class="text-xs font-semibold bg-slate-100 text-slate-700 px-3 py-2 rounded-xl border border-slate-200 flex items-center space-x-1.5">
                     <span>📅</span>
                     <span>{{ \Carbon\Carbon::now()->locale('id')->isoFormat('D MMMM YYYY') }}</span>
                 </div>
+
+                <!-- Quick Lock Button -->
+                <form method="POST" action="{{ route('pin.logout') }}" class="inline">
+                    @csrf
+                    <button type="submit" title="Kunci Brankas" class="px-2.5 py-2 text-xs font-bold text-slate-600 hover:text-rose-600 hover:bg-rose-50 rounded-xl border border-slate-200 bg-white transition-colors flex items-center space-x-1 shadow-xs">
+                        <span>🔒</span>
+                        <span class="hidden sm:inline">Kunci</span>
+                    </button>
+                </form>
             </div>
         </header>
 
