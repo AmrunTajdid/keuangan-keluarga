@@ -1,10 +1,12 @@
+.env
+.env.*
 .git
 .github
 node_modules
+/vendor
 tests
-.env
-.env.example
 phpunit.xml
-vite.config.js
-tailwind.config.js
-postcss.config.js
+.phpunit.result.cache
+.editorconfig
+README.md
+DEPLOY_VERCEL.md

@@ -4,6 +4,7 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
+        "vercel-build": "echo 'Assets already built in public/build'",
         "dev": "vite"
     },
     "devDependencies": {
