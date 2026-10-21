@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buka Brankas - KeuanganKeluarga</title>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -28,7 +28,7 @@
 <body class="bg-gradient-to-tr from-sky-100 via-blue-50 to-indigo-100 min-h-screen flex items-center justify-center p-4 text-slate-800">
 
     <div class="max-w-sm w-full bg-white rounded-3xl shadow-xl shadow-blue-500/10 border border-slate-200/80 p-6 sm:p-8 flex flex-col items-center text-center relative overflow-hidden">
-        
+
         <!-- Decorative Glow -->
         <div class="absolute -top-12 -left-12 w-32 h-32 bg-blue-400/10 rounded-full blur-2xl pointer-events-none"></div>
         <div class="absolute -bottom-12 -right-12 w-32 h-32 bg-indigo-400/10 rounded-full blur-2xl pointer-events-none"></div>
@@ -61,15 +61,15 @@
 
             <!-- PIN Display Input -->
             <div class="relative">
-                <input 
-                    type="password" 
-                    name="pin" 
-                    id="pinInput" 
-                    maxlength="6" 
-                    inputmode="numeric" 
-                    pattern="[0-9]*" 
-                    autocomplete="off" 
-                    required 
+                <input
+                    type="password"
+                    name="pin"
+                    id="pinInput"
+                    maxlength="6"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    autocomplete="off"
+                    required
                     autofocus
                     placeholder="• • • • • •"
                     class="w-full text-center tracking-[0.5em] text-2xl font-black py-3 px-4 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-900 focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 focus:outline-none transition-all placeholder:tracking-widest placeholder:text-slate-300"
@@ -101,7 +101,7 @@
         </form>
 
         <p class="text-[11px] text-slate-400 mt-6">
-            Finansial Aman & Terjaga &bull; KeuanganKeluarga
+            AmarDella &bull; KeuanganKeluarga
         </p>
 
     </div>
