@@ -1,0 +1,10 @@
+.git
+.github
+node_modules
+tests
+.env
+.env.example
+phpunit.xml
+vite.config.js
+tailwind.config.js
+postcss.config.js
