@@ -12,6 +12,11 @@ $app = Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->trustProxies(at: '*');
+        $middleware->validateCsrfTokens(except: [
+            'pin-login',
+            'pin-logout',
+            'pin_login',
+        ]);
         $middleware->alias([
             'pin.auth' => \App\Http\Middleware\EnsurePinAuthenticated::class,
         ]);

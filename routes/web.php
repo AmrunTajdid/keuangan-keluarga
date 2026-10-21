@@ -12,6 +12,7 @@ use App\Http\Controllers\WalletController;
 use Illuminate\Support\Facades\Route;
 
 // PIN Authentication Routes (Public)
+Route::redirect('/pin_login', '/pin-login');
 Route::get('/pin-login', [PinAuthController::class, 'showLogin'])->name('pin.login');
 Route::post('/pin-login', [PinAuthController::class, 'verify'])->name('pin.verify');
 Route::post('/pin-logout', [PinAuthController::class, 'logout'])->name('pin.logout');

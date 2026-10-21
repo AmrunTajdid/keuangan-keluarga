@@ -123,4 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'family_pin' => env('FAMILY_PIN', '030923'),
+
 ];

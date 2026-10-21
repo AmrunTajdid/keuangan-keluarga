@@ -23,16 +23,16 @@ class PinAuthController extends Controller
             'pin.required' => 'Silakan masukkan PIN.',
         ]);
 
-        $correctPin = env('FAMILY_PIN', '030923');
+        $correctPin = config('app.family_pin', env('FAMILY_PIN', '030923'));
 
         if ($request->pin === (string) $correctPin) {
             $request->session()->regenerate();
             session(['pin_authenticated' => true]);
 
-            return redirect()->intended(route('dashboard'))->with('success', 'Selamat datang! Brankas keluarga berhasil dibuka.');
+            return redirect()->route('dashboard')->with('success', 'Selamat datang! Brankas keluarga berhasil dibuka.');
         }
 
-        return back()->with('error', 'PIN salah! Silakan masukkan 6 digit PIN yang benar.');
+        return redirect()->route('pin.login')->with('error', 'PIN salah! Silakan masukkan 6 digit PIN yang benar.');
     }
 
     public function logout(Request $request)

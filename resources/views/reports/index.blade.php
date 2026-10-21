@@ -39,7 +39,7 @@
 
     <!-- Printable Report Container -->
     <div class="bg-white p-6 sm:p-10 rounded-3xl border border-slate-200/80 shadow-xs space-y-8">
-        
+
         <!-- Report Header -->
         <div class="border-b border-slate-200 pb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
@@ -201,11 +201,11 @@
         <div class="pt-8 border-t border-slate-200 grid grid-cols-2 text-center text-xs text-slate-600">
             <div>
                 <p class="font-bold mb-12">Kepala Keluarga</p>
-                <p class="font-semibold underline">( Ayah / Budi )</p>
+                <p class="font-semibold underline">( Ayah / Amar )</p>
             </div>
             <div>
                 <p class="font-bold mb-12">Bendahara Keluarga</p>
-                <p class="font-semibold underline">( Ibu / Siti )</p>
+                <p class="font-semibold underline">( Ibu / Della )</p>
             </div>
         </div>
 

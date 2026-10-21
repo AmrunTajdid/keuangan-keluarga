@@ -26,6 +26,12 @@ class BudgetAppTest extends TestCase
         $response->assertSee('membuka brankas keluarga');
     }
 
+    public function test_pin_login_underscore_redirects_to_hyphen(): void
+    {
+        $response = $this->get('/pin_login');
+        $response->assertRedirect('/pin-login');
+    }
+
     public function test_unauthenticated_user_redirected_to_pin_login(): void
     {
         $response = $this->get('/');
