@@ -17,25 +17,53 @@ foreach ($directories as $dir) {
     }
 }
 
-// Copy sqlite database to /tmp so it's writable in Vercel Serverless
-$sqliteDb = '/tmp/database.sqlite';
-if (!file_exists($sqliteDb)) {
-    $sourceDb = __DIR__ . '/../database/database.sqlite';
-    if (file_exists($sourceDb)) {
-        copy($sourceDb, $sqliteDb);
-    } else {
-        touch($sqliteDb);
+// Database configuration for Vercel Serverless:
+// Check if an external cloud database is configured (e.g. Neon, Supabase, Cloud MySQL/PostgreSQL)
+$dbUrl = getenv('DB_URL') ?: (getenv('DATABASE_URL') ?: ($_ENV['DB_URL'] ?? ($_ENV['DATABASE_URL'] ?? null)));
+$dbConnection = getenv('DB_CONNECTION') ?: ($_ENV['DB_CONNECTION'] ?? null);
+
+if ($dbUrl || ($dbConnection && $dbConnection !== 'sqlite')) {
+    if ($dbUrl) {
+        putenv('DB_URL=' . $dbUrl);
+        $_ENV['DB_URL'] = $dbUrl;
+        $_SERVER['DB_URL'] = $dbUrl;
+
+        // Auto-detect DB_CONNECTION from URL scheme if not explicitly provided
+        if (!$dbConnection) {
+            $scheme = parse_url($dbUrl, PHP_URL_SCHEME);
+            if ($scheme === 'postgres' || $scheme === 'postgresql') {
+                $dbConnection = 'pgsql';
+            } elseif ($scheme === 'mysql') {
+                $dbConnection = 'mysql';
+            }
+        }
     }
+
+    if ($dbConnection) {
+        putenv('DB_CONNECTION=' . $dbConnection);
+        $_ENV['DB_CONNECTION'] = $dbConnection;
+        $_SERVER['DB_CONNECTION'] = $dbConnection;
+    }
+} else {
+    // Fallback: Copy sqlite database to /tmp so it's writable in Vercel Serverless (Temporary demo mode)
+    $sqliteDb = '/tmp/database.sqlite';
+    if (!file_exists($sqliteDb)) {
+        $sourceDb = __DIR__ . '/../database/database.sqlite';
+        if (file_exists($sourceDb)) {
+            copy($sourceDb, $sqliteDb);
+        } else {
+            touch($sqliteDb);
+        }
+    }
+
+    putenv('DB_CONNECTION=sqlite');
+    $_ENV['DB_CONNECTION'] = 'sqlite';
+    $_SERVER['DB_CONNECTION'] = 'sqlite';
+
+    putenv('DB_DATABASE=' . $sqliteDb);
+    $_ENV['DB_DATABASE'] = $sqliteDb;
+    $_SERVER['DB_DATABASE'] = $sqliteDb;
 }
-
-// Critical Environment Variables for Vercel Serverless
-putenv('DB_CONNECTION=sqlite');
-$_ENV['DB_CONNECTION'] = 'sqlite';
-$_SERVER['DB_CONNECTION'] = 'sqlite';
-
-putenv('DB_DATABASE=' . $sqliteDb);
-$_ENV['DB_DATABASE'] = $sqliteDb;
-$_SERVER['DB_DATABASE'] = $sqliteDb;
 
 putenv('LARAVEL_STORAGE_PATH=' . $storagePath);
 $_ENV['LARAVEL_STORAGE_PATH'] = $storagePath;

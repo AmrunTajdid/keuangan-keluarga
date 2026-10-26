@@ -3,6 +3,7 @@
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DatabaseSetupController;
 use App\Http\Controllers\FamilyMemberController;
 use App\Http\Controllers\PinAuthController;
 use App\Http\Controllers\ReportController;
@@ -16,6 +17,9 @@ Route::redirect('/pin_login', '/pin-login');
 Route::get('/pin-login', [PinAuthController::class, 'showLogin'])->name('pin.login');
 Route::post('/pin-login', [PinAuthController::class, 'verify'])->name('pin.verify');
 Route::post('/pin-logout', [PinAuthController::class, 'logout'])->name('pin.logout');
+
+// Public Database Migration Trigger (Protected by PIN parameter)
+Route::match(['get', 'post'], '/system/migrate', [DatabaseSetupController::class, 'migrate'])->name('system.migrate.public');
 
 // Protected Routes (Must authenticate with PIN: 030923)
 Route::middleware('pin.auth')->group(function () {
@@ -46,4 +50,8 @@ Route::middleware('pin.auth')->group(function () {
 
     // Reports
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+
+    // Database Setup & Health Check
+    Route::get('/database-setup', [DatabaseSetupController::class, 'index'])->name('system.database');
+    Route::post('/database-setup/migrate', [DatabaseSetupController::class, 'migrate'])->name('system.migrate');
 });

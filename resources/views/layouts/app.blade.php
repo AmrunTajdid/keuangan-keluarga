@@ -138,6 +138,14 @@
                     <span class="text-lg">📄</span>
                     <span>Laporan & Cetak</span>
                 </a>
+
+                <a href="{{ route('system.database') }}" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-colors {{ request()->routeIs('system.database') ? 'bg-blue-50 text-blue-700 font-semibold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                    <span class="text-lg">🗄️</span>
+                    <span>Database Cloud</span>
+                    @if((isset($_SERVER['VERCEL']) || getenv('VERCEL') || isset($_ENV['VERCEL'])) && config('database.default') === 'sqlite')
+                        <span class="ml-auto w-2 h-2 rounded-full bg-amber-500 animate-pulse" title="Perlu disambungkan ke database cloud"></span>
+                    @endif
+                </a>
             </nav>
         </div>
 
@@ -197,6 +205,23 @@
 
         <!-- Flash Messages -->
         <main class="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full">
+            @if((isset($_SERVER['VERCEL']) || getenv('VERCEL') || isset($_ENV['VERCEL'])) && config('database.default') === 'sqlite')
+                <div class="mb-6 p-4 sm:p-5 rounded-2xl bg-amber-50 border-2 border-amber-300 text-amber-950 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <div class="flex items-start space-x-3">
+                        <span class="text-2xl shrink-0">⚠️</span>
+                        <div>
+                            <p class="text-sm font-bold text-amber-950">Mode Penyimpanan Sementara (Vercel SQLite)</p>
+                            <p class="text-xs text-amber-800 mt-0.5">
+                                Data yang Anda input akan di-reset (hilang) saat logout atau server restart karena serverless Vercel tidak menyimpan file lokal. Sambungkan <strong>Cloud Database (Neon / Supabase)</strong> gratis agar data tersimpan permanen selamanya.
+                            </p>
+                        </div>
+                    </div>
+                    <a href="{{ route('system.database') }}" class="shrink-0 px-3.5 py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs rounded-xl shadow-xs transition-colors">
+                        Sambungkan Cloud DB &rarr;
+                    </a>
+                </div>
+            @endif
+
             @if(session('success'))
                 <div class="mb-6 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 flex items-start space-x-3 shadow-xs">
                     <span class="text-lg">✅</span>

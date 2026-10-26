@@ -44,3 +44,29 @@ Karena repository harus dibuat terlebih dahulu di akun GitHub Anda:
 5. Klik tombol **"Deploy"**.
 6. Tunggu sekitar 1–2 menit hingga build selesai. Website aplikasi Keuangan Keluarga Anda akan langsung live di alamat:
    👉 `https://keuangan-keluarga.vercel.app` (atau nama project yang Anda tentukan).
+
+---
+
+## Langkah 3: Sambungkan Cloud Database Gratis (Agar Data Tersimpan Permanen)
+
+Secara default, Vercel adalah platform **Serverless tanpa harddisk fisik**, sehingga file SQLite bawaan di `/tmp` hanya bersifat sementara (akan hilang saat server tertidur atau logout).
+
+Agar data transaksi, anggaran, dan tabungan Anda tersimpan **aman & permanen selamanya**, sambungkan ke database cloud gratis (contoh: **Neon.tech** PostgreSQL):
+
+1. **Daftar Akun Gratis di Neon**:
+   - Buka **[https://neon.tech](https://neon.tech)** &rarr; Sign Up dengan akun GitHub Anda.
+   - Buat project baru, beri nama: `keuangan-keluarga` &rarr; klik **Create Project**.
+   - Salin **Connection String** yang muncul (contoh: `postgresql://neondb_owner:npg_xxxx@ep-xyz.us-east-2.aws.neon.tech/neondb?sslmode=require`).
+
+2. **Pasang di Vercel Dashboard**:
+   - Buka project Anda di **[vercel.com](https://vercel.com)** &rarr; tab **Settings** &rarr; **Environment Variables**.
+   - Tambahkan 2 variabel:
+     - `DB_CONNECTION` = `pgsql`
+     - `DATABASE_URL` = `<Paste Connection String dari Neon tadi>`
+   - Klik **Save**.
+
+3. **Redeploy & Jalankan Migrasi Otomatis**:
+   - Di dashboard Vercel, masuk ke tab **Deployments** &rarr; klik titik tiga (⋮) pada deployment terbaru &rarr; pilih **Redeploy**.
+   - Setelah redeploy selesai, buka aplikasi Anda dan buka menu **"Database Cloud"** (atau buka URL: `https://domain-anda.vercel.app/system/migrate?pin=030923&seed=1`).
+   - Klik tombol **"Jalankan Migrasi & Data Awal"**.
+   - Selesai! Data Anda sekarang tersimpan permanen di cloud dan tidak akan pernah hilang lagi.

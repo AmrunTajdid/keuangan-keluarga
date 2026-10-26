@@ -133,4 +133,24 @@ class BudgetAppTest extends TestCase
             'amount' => 50000,
         ]);
     }
+
+    public function test_database_setup_page_loads_with_pin(): void
+    {
+        $response = $this->withSession(['pin_authenticated' => true])->get('/database-setup');
+        $response->assertStatus(200);
+        $response->assertSee('Status & Konfigurasi Database');
+    }
+
+    public function test_system_migrate_requires_valid_pin(): void
+    {
+        $response = $this->get('/system/migrate?pin=wrongpin');
+        $response->assertStatus(403);
+    }
+
+    public function test_system_migrate_succeeds_with_valid_pin(): void
+    {
+        $response = $this->get('/system/migrate?pin=030923&seed=0');
+        $response->assertStatus(200);
+        $response->assertJson(['status' => 'success']);
+    }
 }

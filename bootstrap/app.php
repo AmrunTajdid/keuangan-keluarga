@@ -16,6 +16,8 @@ $app = Application::configure(basePath: dirname(__DIR__))
             'pin-login',
             'pin-logout',
             'pin_login',
+            'database-setup/migrate',
+            'system/migrate',
         ]);
         $middleware->alias([
             'pin.auth' => \App\Http\Middleware\EnsurePinAuthenticated::class,
