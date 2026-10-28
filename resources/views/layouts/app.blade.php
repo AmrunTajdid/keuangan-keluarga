@@ -138,14 +138,6 @@
                     <span class="text-lg">📄</span>
                     <span>Laporan & Cetak</span>
                 </a>
-
-                <a href="{{ route('system.database') }}" class="flex items-center space-x-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-colors {{ request()->routeIs('system.database') ? 'bg-blue-50 text-blue-700 font-semibold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
-                    <span class="text-lg">🗄️</span>
-                    <span>Database Cloud</span>
-                    @if((isset($_SERVER['VERCEL']) || getenv('VERCEL') || isset($_ENV['VERCEL'])) && config('database.default') === 'sqlite')
-                        <span class="ml-auto w-2 h-2 rounded-full bg-amber-500 animate-pulse" title="Perlu disambungkan ke database cloud"></span>
-                    @endif
-                </a>
             </nav>
         </div>
 
