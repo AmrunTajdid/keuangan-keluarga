@@ -63,6 +63,15 @@ class DatabaseSetupController extends Controller
         }
 
         try {
+            // Neon PostgreSQL: PgBouncer pooler (-pooler) causes transaction aborts on DDL migrations.
+            // If the URL contains '-pooler.', automatically switch to direct connection.
+            $currentUrl = config('database.connections.pgsql.url') ?: (getenv('DATABASE_URL') ?: getenv('DB_URL'));
+            if ($currentUrl && strpos($currentUrl, '-pooler.') !== false) {
+                $directUrl = str_replace('-pooler.', '.', $currentUrl);
+                config(['database.connections.pgsql.url' => $directUrl]);
+                DB::purge('pgsql');
+            }
+
             // Run migrations
             Artisan::call('migrate', ['--force' => true]);
             $migrateOutput = Artisan::output();

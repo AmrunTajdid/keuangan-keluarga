@@ -15,6 +15,11 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        // Guard to prevent duplicate data if seeded multiple times
+        if (FamilyMember::count() > 0) {
+            return;
+        }
+
         // 1. Family Members
         $ayah = FamilyMember::create([
             'name' => 'Ayah (Budi)',

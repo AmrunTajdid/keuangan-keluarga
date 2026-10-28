@@ -24,9 +24,19 @@ $dbConnection = getenv('DB_CONNECTION') ?: ($_ENV['DB_CONNECTION'] ?? null);
 
 if ($dbUrl || ($dbConnection && $dbConnection !== 'sqlite')) {
     if ($dbUrl) {
+        // Neon PostgreSQL: PgBouncer pooler (-pooler) causes transaction aborts on DDL migrations.
+        // Stripping '-pooler.' connects directly to Postgres, supporting both migrations and normal queries without issues.
+        if (strpos($dbUrl, '-pooler.') !== false) {
+            $dbUrl = str_replace('-pooler.', '.', $dbUrl);
+        }
+
         putenv('DB_URL=' . $dbUrl);
         $_ENV['DB_URL'] = $dbUrl;
         $_SERVER['DB_URL'] = $dbUrl;
+
+        putenv('DATABASE_URL=' . $dbUrl);
+        $_ENV['DATABASE_URL'] = $dbUrl;
+        $_SERVER['DATABASE_URL'] = $dbUrl;
 
         // Auto-detect DB_CONNECTION from URL scheme if not explicitly provided
         if (!$dbConnection) {
